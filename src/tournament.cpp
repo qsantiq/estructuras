@@ -1,8 +1,4 @@
 #include "tournament.h"
-#include "tournament.h"
-#include<string>
-#include<algorithm>
-#include<iterator>
 using namespace std;
 
 tournament::tournament(){}
@@ -16,6 +12,7 @@ tournament::tournament(int s){
     this->cntaken=0;
     this->nctaken=0;
     this->ncntaken=0;
+    
     predictorg = *new gshare (s);
     predictorp = *new pshare (s);
     for (int i=0; i<(pow(2,s)); i++)
@@ -27,7 +24,9 @@ tournament::tournament(int s){
             
 }
 
-tournament::~tournament(){}
+tournament::~tournament(){
+   
+}
 
 int tournament::select_counter(unsigned long address, int s)
 {
@@ -44,7 +43,7 @@ int tournament::select_counter(unsigned long address, int s)
 
 void tournament:: predict(int c){
 
-    
+ 
 if (this->counters[c].actual_s == 0 || this->counters[c].actual_s == 1  )
 {
     this->prediction = this->predictorg.prediction;
@@ -139,17 +138,15 @@ void tournament::g_predict(long address, int s, int gh, char j){
 
 }
 void tournament::p_predict(long address, int s, int ph, char j){
-    //cout<< this->predictorp.counters.size()<<endl;
-    
+     
     int counter_number_p =0;
     bool j_p =0;
     counter_number_p=this->predictorp.select_counter(address, s);
     this->predictorp.predict (counter_number_p);
     j_p = this->predictorp.compare(j);
-    //cout<<address<<" "<<counter_number_p<<" "<<this->predictorp.counters[counter_number_p].actual_s<<" ";
     this->predictorp.change_counter(counter_number_p, j_p);
     this->predictorp.update_pht(address, j, s,ph);
-     //cout<<this->predictorp.counters[counter_number_p].actual_s<<" "<<this->predictorp.prediction<<" "<<j<< " " << this->predictorp.result <<" "<<endl;
+     
 
 }
 
@@ -157,38 +154,38 @@ void tournament::ALL( int s, int gh, int ph, int o)
 {   ofstream out;
     string address_s;
     string jump_s;
-    string line= "";
-    string out_p="output/outg.txt";
+    string line;
+    string out_p="output/outt.txt";
     bool first_i =0;
     bool jump_b = 0;
     long address;
     char jump_c;
-    int i =0;
     int k = 0;
     int counter_number =0;
-    while(cin>>jump_c && cin >> address_s)
+    while(!cin.eof())
     { 
+        cin>>address_s;
+        cin>>jump_c;
         jump_s = jump_c;
         address = stol(address_s);
-        //cout <<address <<endl;
         if(address_s.empty() || jump_c == 0 )
         {
             break;
         }
         
-        //cout<< address << " " << jump<< ' ';
+        
         counter_number = this->select_counter(unsigned(address), s);
         this->g_predict(address, s, gh, jump_c);
         this->p_predict(address, s, ph, jump_c);
         this->predict(counter_number);
         jump_b = this->compare(jump_c);
-        //cout<<counter_number<<" "<<this->counters[counter_number].actual_s<<" ";
         this->change_counter(counter_number,jump_b);
-        //cout<<this->counters[counter_number].actual_s<<" " << this->prediction <<" "<<this->result <<' '<<jump_b<<endl;
+        
 
 
-        if( o ==1 && k< 5000)
+        if( o == 1 && k <= 5000)
         {
+            
             line.append(to_string(address));
             line.append("       ");
             line.append(jump_s);
@@ -196,28 +193,25 @@ void tournament::ALL( int s, int gh, int ph, int o)
             string s(1, this->prediction);
             line.append(s);
             line.append("               ");
-            string k(1, this->result);
-            line.append(k);
-            //line.append("\n");
+            string m(1, this->result);
+            line.append(m);
+            
 
+              
             if (first_i ==0)
             {
-                string header;
-                header="PREDICTORT\nPC            OUTCOME    PREDICTION    CORRECT/INCORRECT";                
                 out.open(out_p, ofstream::out | ofstream::trunc);
-                //out << header<<endl;
-                out.close();
+                string header;
+                header="PREDICTORT\nPC         OUTCOME    PREDICTION    CORRECT/INCORRECT";                
+                out << header<<endl;
+                out.close();                
                 first_i =1;
-                out.open(out_p, ofstream::out | ofstream::app);
-                out << line<<endl;
-                out.close();
+                
             }
-            else
-            {
-                out.open(out_p, ofstream::out | ofstream::app);
-                out << line<<endl;
-                out.close();
-            }
+            
+            out.open(out_p, ofstream::out | ofstream::app);
+            out << line<<endl;
+            out.close();    
             line.clear();
             
         }
@@ -240,12 +234,12 @@ void tournament::ALL( int s, int gh, int ph, int o)
     cout<<"--------------------------------------------------------------"<<endl;
     cout<<"Simulation Results:"<<endl;
     cout<<"--------------------------------------------------------------"<<endl;
-    cout<<"Number of Branch                                        "<<this->jumps<<endl;
+    cout<<"Number of Branch                                        "<<this->jumps-1<<endl;
     cout<<"Number of correct prediction of taken branches:         "<<this->ctaken<<endl;
     cout<<"Number of incorrect prediction of taken branches:       "<<this->nctaken<<endl;
     cout<<"Correct prediction of not taken branches:               "<<this->cntaken<<endl; 
     cout<<"Incorrect prediction of not taken branches:             "<<this->ncntaken<<endl;
-    cout<<"Percentage of correct predictions:                      "<<this->correct_rate<<endl;                                        
+    cout<<"Percentage of correct predictions:                      "<<this->correct_rate*100<<endl;                                        
     cout<<"--------------------------------------------------------------"<<endl;
   
 }

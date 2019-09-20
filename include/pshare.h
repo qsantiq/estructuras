@@ -6,9 +6,7 @@
 #include <fstream>
 #include<string>
 #include <bitset>
-#include<vector>
 #include <math.h> 
-#include <bits/stdc++.h> 
 #include"bitcounter.h"
 #include"bimodal.h"
 using namespace std;
@@ -27,10 +25,10 @@ double jumps;
 double fails;
 double miss_rate;
 double correct_rate;
-long ctaken;
-long cntaken;
-long nctaken;
-long ncntaken;
+long   ctaken;
+long   cntaken;
+long   nctaken;
+long   ncntaken;
 
 /**
 *@funtion pshare

@@ -55,6 +55,14 @@ bool bimodal::compare( char j){
     else 
     {
         this->result = ('I');
+        if(j == 'T')
+            {
+                this->nctaken++;
+            }
+            else
+            {
+                this->ncntaken++;
+            }
         this->fails++;
     }
     if (j== 'T')
@@ -89,45 +97,32 @@ void bimodal::ALL( int s, int gh, int ph, int o)
     string address_s;
     string jump_s;
     string line= "";
-    string out_p="outputb/out.txt";
+    string out_p="output/outb.txt";
+    string aux;
     bool first_i =0;
     bool jump_b = 0;
     long address;
     char jump_c;
-    int i =0;
     int k = 0;
     int counter_number =0;
 
-   /* if(first_i ==0)
-    {
-
-    }*/
-    while(cin>>jump_c && cin >> address_s)
+   
+    while(!cin.eof())
     {   
         
-        
-        
-        if(jump_c == 'T')
-        {
-            jump_s = "T";
-        }
-        else
-        {
-            jump_s = "N";
-        }
-
-        
+         cin >> address_s;
+        cin>>jump_c;  
+       
+       
+          
         address = stol(address_s);
-        if(address_s.empty() || jump_c == 0 )
-        {
-            break;
-        }
+        
         
             
-            counter_number = this->select_c(s,unsigned(address));
-            this->predict(counter_number);
-            jump_b = this->compare(jump_c);
-            this->change_counter(counter_number,jump_b);
+        counter_number = this->select_c(s,unsigned(address));
+        this->predict(counter_number);
+        jump_b = this->compare(jump_c);
+        this->change_counter(counter_number,jump_b);
            
     
     if( o ==1 && k< 5000)
@@ -139,8 +134,8 @@ void bimodal::ALL( int s, int gh, int ph, int o)
             string s(1, this->prediction);
             line.append(s);
             line.append("               ");
-            string k(1, this->result);
-            line.append(k);
+            string m(1, this->result);
+            line.append(m);
         
 
             if (first_i ==0)
@@ -151,16 +146,11 @@ void bimodal::ALL( int s, int gh, int ph, int o)
                 out << header<<endl;
                 out.close();
                 first_i =1;
-                out.open(out_p, ofstream::out | ofstream::app);
-                out << line<<endl;
-                out.close();
+                
             }
-            else
-            {
-                out.open(out_p, ofstream::out | ofstream::app);
-                out << line<<endl;
-                out.close();
-            }
+            out.open(out_p, ofstream::out | ofstream::app);
+            out << line<<endl;
+            out.close();
             line.clear();
             
         }
@@ -182,7 +172,7 @@ void bimodal::ALL( int s, int gh, int ph, int o)
     cout<<"--------------------------------------------------------------"<<endl;
     cout<<"Simulation Results:"<<endl;
     cout<<"--------------------------------------------------------------"<<endl;
-    cout<<"Number of Branch                                        "<<this->jumps<<endl;
+    cout<<"Number of Branch                                        "<<this->jumps-1<<endl;
     cout<<"Number of correct prediction of taken branches:         "<<this->ctaken<<endl;
     cout<<"Number of incorrect prediction of taken branches:       "<<this->nctaken<<endl;
     cout<<"Correct prediction of not taken branches:               "<<this->cntaken<<endl; 

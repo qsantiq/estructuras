@@ -1,7 +1,5 @@
 #include "pshare.h"
-#include<string>
-#include<algorithm>
-#include<iterator>
+
 using namespace std;
 
 pshare::pshare(){}
@@ -20,6 +18,10 @@ pshare::pshare(int s){
         this-> counters.push_back(*new bitcounter());
         this->pht.push_back(0);
     }
+    for(int i=0; i<(pow(2,5)); i++ )
+    {
+         
+    }
             
 }
 
@@ -30,7 +32,6 @@ int pshare::select_counter(unsigned long address, int s)
    
     unsigned long mask=pow(2,s)-1;
     unsigned long c_n=0;
-    unsigned long aux=0;
     unsigned long pht_a = address & mask;
     c_n = this->pht[pht_a] ^ pht_a;
     return c_n;
@@ -66,10 +67,19 @@ bool pshare::compare(char j){
     else 
     {
         this->result = ('I');
+        if(j == 'T')
+            {
+                this->nctaken++;
+            }
+            else
+            {
+                this->ncntaken++;
+            }
         this->fails++;
     }
     if (j== 'T')
     {
+        
         return 1;
     }
     else
@@ -102,7 +112,8 @@ void pshare:: update_pht(long address,char j, int s,int ph){
 }
 
 void pshare:: ALL( int s, int gh, int ph, int o)
-{   ofstream out;
+{  
+    ofstream out;
     string address_s;
     string jump_s;
     string line= "";
@@ -111,30 +122,25 @@ void pshare:: ALL( int s, int gh, int ph, int o)
     bool jump_b = 0;
     long address;
     char jump_c;
-    int i =0;
     int k = 0;
     int counter_number =0;
-    while(cin>>jump_c && cin >> address_s)
+    while(!cin.eof())
     { 
+         cin>>address_s;
+        cin>>jump_c;
         jump_s = jump_c;
-        address = stol(address_s);
-        //cout <<address <<endl;
-        if(address_s.empty() || jump_c == 0 )
-        {
-            break;
-        }
+        address = stol(address_s); 
         
-        //cout<< address << " " << jump<< ' ';
+        
         counter_number = this->select_counter(unsigned(address), s);
         this->predict(counter_number);
         jump_b = this->compare(jump_c);
-        
         this->change_counter(counter_number,jump_b);
         this->update_pht( address, jump_c, s, ph);
         
 
 
-        if( o ==1 && k< 5000)
+        if( o ==1 && k<= 5000)
         {
             line.append(to_string(address));
             line.append("       ");
@@ -143,9 +149,9 @@ void pshare:: ALL( int s, int gh, int ph, int o)
             string s(1, this->prediction);
             line.append(s);
             line.append("               ");
-            string k(1, this->result);
-            line.append(k);
-            //line.append("\n");
+            string m(1, this->result);
+            line.append(m);
+            
 
             if (first_i ==0)
             {
@@ -155,16 +161,11 @@ void pshare:: ALL( int s, int gh, int ph, int o)
                 out << header<<endl;
                 out.close();
                 first_i =1;
-                out.open(out_p, ofstream::out | ofstream::app);
-                out << line<<endl;
-                out.close();
+                
             }
-            else
-            {
-                out.open(out_p, ofstream::out | ofstream::app);
-                out << line<<endl;
-                out.close();
-            }
+            out.open(out_p, ofstream::out | ofstream::app);
+            out << line<<endl;
+            out.close();
             line.clear();
             
         }
@@ -172,6 +173,7 @@ void pshare:: ALL( int s, int gh, int ph, int o)
     
 
     }
+    
 
     this->miss_rate = this->fails/(this->jumps);
     this->correct_rate = (double)(this->ctaken+this->cntaken)/jumps;
@@ -187,12 +189,12 @@ void pshare:: ALL( int s, int gh, int ph, int o)
     cout<<"--------------------------------------------------------------"<<endl;
     cout<<"Simulation Results:"<<endl;
     cout<<"--------------------------------------------------------------"<<endl;
-    cout<<"Number of Branch                                        "<<this->jumps<<endl;
+    cout<<"Number of Branch                                        "<<this->jumps-1<<endl;
     cout<<"Number of correct prediction of taken branches:         "<<this->ctaken<<endl;
     cout<<"Number of incorrect prediction of taken branches:       "<<this->nctaken<<endl;
     cout<<"Correct prediction of not taken branches:               "<<this->cntaken<<endl; 
     cout<<"Incorrect prediction of not taken branches:             "<<this->ncntaken<<endl;
-    cout<<"Percentage of correct predictions:                      "<<this->correct_rate<<endl;                                        
+    cout<<"Percentage of correct predictions:                      "<<this->correct_rate*100<<endl;                                        
     cout<<"--------------------------------------------------------------"<<endl;
 
 }

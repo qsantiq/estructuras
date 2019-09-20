@@ -1,0 +1,20 @@
+Tarea 1
+Predictores de saltos
+Autor: Santiago Castro Montiel
+Carné: B51755
+
+Para el uso del programa se cuenta con un makefile con las siguientes instrucciones importantes:
+Instrucción.                    Comando. 
+Compilar                          make
+Correr                           gunzip
+
+Es necesario modificar los parametros que se muestran a continuacion a gusto personal:
+
+ 
+TARGETSn = Tamaño de la tabla BTH. (-s)
+TARGETBHn = Tipo de predicción (-bp)
+TARGETphn= Tamaño de los registros de historia privada (-ph)
+TARGETGHn = Tamaño del registro de predicción global (-gh)
+TARGETOon = salida de la simulación (-o)
+TARGETGPATH = Archivo de entrada comprimido
+

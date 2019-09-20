@@ -1,14 +1,12 @@
 #ifndef TOURNAMENT_H
 #define TOURNAMENT_H
-//trenes
+
 
 #include <iostream>
 #include <fstream>
 #include<string>
 #include <bitset>
-#include<vector>
 #include <math.h> 
-#include <bits/stdc++.h> 
 #include"bitcounter.h"
 #include"bimodal.h"
 #include"gshare.h"
