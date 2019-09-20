@@ -1,5 +1,4 @@
 #include "bimodal.h"
-#include <math.h> 
 bimodal::bimodal(){}
 bimodal::bimodal(int s){
 

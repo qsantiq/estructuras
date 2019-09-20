@@ -1,6 +1,6 @@
 #ifndef GSHARE_H
 #define GSHARE_H
-//trenes
+
 
 #include <iostream>
 #include <fstream>
@@ -13,7 +13,6 @@ using namespace std;
 
 class gshare {
 public:
-//vector<int> bhr;
 unsigned char bhr;
 char prediction;
 char result;

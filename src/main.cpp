@@ -3,14 +3,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
-//#include <netinet/in.h>
 #include <math.h>
 #include <fstream>
 #include <time.h>
 #include<vector>
 #include "bitcounter.h"
 #include "bimodal.h"
-#include "reader.h"
 #include "gshare.h"
 #include "pshare.h"
 #include "tournament.h"

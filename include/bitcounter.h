@@ -1,6 +1,6 @@
 #ifndef BITCOUNTER_H
 #define BITCOUNTER_H
-//trenes
+
 
 #include <iostream>
 #include <fstream>

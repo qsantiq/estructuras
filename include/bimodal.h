@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include<string>
+#include <math.h> 
 #include"bitcounter.h"
 #include <bitset>
 using namespace std;
@@ -77,8 +78,6 @@ void change_counter(int counter_number, bool jump);
 *@param bool o
 **/
 void ALL( int s, int gh, int ph, int o);
-
-void print();
 
 
 };

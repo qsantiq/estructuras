@@ -1,6 +1,6 @@
 #ifndef PSHARE_H
 #define PSHARE_H
-//trenes
+
 
 #include <iostream>
 #include <fstream>
@@ -13,9 +13,7 @@ using namespace std;
 
 class pshare {
 public:
-vector<long> pht_a;
 
-vector<string> pht_h;
 char prediction;
 char result;
 unsigned char bhr;
